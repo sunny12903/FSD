@@ -1,0 +1,795 @@
+Exercise 7: Design Node Blog system
+Index.js
+const path = require('path');
+const express = require('express');
+const app = new express();
+app.use(express.static('public'));
+app.get('/', (req, res) => {
+res.sendFile(path.resolve(__dirname, 'pages/index.html'));
+});
+app.listen(8000, () => {
+console.log('App listening on port 8000')
+});
+Index.html
+<h1>Blog Home Page</h1>
+output
+Exercise 8: Design book store system
+App.js
+var express = require('express');
+var app = require('express')();
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+app.get('/', function (req, res) {
+res.render("client");
+});
+app.listen(5000, function () {
+console.log('listening on *:5000');
+});
+style.css
+* {
+padding: 0;
+margin: 0;
+text-decoration: none;
+list-style: none;
+box-sizing: border-box;
+}
+body {
+font-family: "Lato", sans-serif;
+text-align: center;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+font-family: "Lato", sans-serif;
+}
+/*** --------------- NAV BAR --------------- ***/
+/* Login/registration */
+.identification-btn {
+padding: 5px;
+}
+.form-group {
+padding-bottom: 10px;
+text-align: left;
+width: 500px;
+}
+/* Nav bar */
+.navbar {
+display: flex;
+justify-content: flex-end;
+align-items: flex-start;
+}
+.navbar-top {
+justify-content: flex-end;
+}
+.nav-link {
+font-weight: bold;
+font-size: 1rem;
+text-transform: uppercase;
+}
+nav ul {
+display: flex;
+}
+nav ul li {
+line-height: 80px;
+margin: 0 5px;
+}
+nav ul li a {
+font-size: 17px;
+padding: 7px 13px;
+border-radius: 5px;
+}
+/* Remove orange border around hamburger menu */
+.navbar-toggler:focus {
+outline: none;
+}
+/* Search bar */
+.search-input {
+width: 100%;
+height: 40px;
+border-style: hidden;
+border-radius: 4px;
+padding: 16px;
+}
+#close-search {
+height: 50px;
+width: 50px;
+margin-left: 440px;
+margin-top: 5px;
+}
+.modal-footer {
+border: 0;
+}
+/*** ------------------- LOGO --------------- ***/
+.nav-brand {
+display: flex;
+}
+.logo-image {
+max-width: 80px;
+max-height: 60px;
+}
+/*** ------------------- CAROUSEL --------------- ***/
+/* Indicators */
+.carousel-indicators li {
+height: 5px;
+margin-bottom: -10px;
+padding-right: 5px;
+}
+.carousel-indicators li:hover {
+transform: scale(1.2);
+}
+/* Controls */
+.control-prev,
+.control-next {
+font-size: 50px;
+}
+/*** --------------- SECTION NEW BOOKS + OUR SELECTION --------------- ***/
+.card-img-top {
+height: 360px;
+}
+.card-deck {
+padding: 17px;
+}
+.card {
+transition: 0.4s;
+}
+.card:hover {
+transform: scale(1.1);
+}
+.newBooks-title,
+.ourSelection-title {
+text-align: left;
+font-size: 1.5 rem;
+font-weight: bold;
+color: #696b6e;
+margin-top: 30px;
+margin-left: 31px;
+margin-bottom: 20px;
+text-transform: uppercase;
+}
+.card-price {
+font-weight: bold;
+}
+/*** --------------- FOOTER --------------- ***/
+footer {
+display: flex;
+justify-content: flex-end;
+align-items: flex-start;
+margin-bottom: 25px;
+margin: auto;
+padding: 35px;
+color: #343a40;
+font-weight: bold;
+font-size: 1rem;
+text-transform: uppercase;
+}
+.social-icon {
+font-size: 20px;
+margin: 20px 8px;
+cursor: pointer;
+}
+/*** --------------- MEDIA QUERIES --------------- ***/
+@media all and (max-width: 752px) {
+.navbar-toggler {
+position: fixed;
+}
+.nav-item {
+margin: 10px 0;
+line-height: 10px;
+}
+.nav-link {
+font-size: 18px;
+}
+.logo-image {
+max-width: 145px;
+min-height: 25px;
+margin-right: 50px;
+}
+.search-container {
+width: 80%;
+margin-top: 10px;
+margin-bottom: 8px;
+margin-right: 90px;
+}
+#search-bar {
+width: 100%;
+height: 40px;
+justify-content: flex-end;
+margin: 0;
+}
+.search-button {
+width: 50px;
+height: 40px;
+margin-right: 25px;
+}
+.card {
+margin: auto;
+}
+}
+@media all and (max-width: 992px) {
+.nav-item {
+line-height: 35px;
+}
+.nav-link {
+font-size: 1rem;
+}
+.card-img-top {
+height: 460px;
+}
+.card:hover {
+transform: none;
+}
+}
+@media all and (max-width: 575.98px) {
+.navbar-toggler {
+position: absolute;
+}
+.logo-image {
+max-width: 50px;
+min-height: 40px;
+}
+.carousel-image {
+max-height: 250px;
+}
+}
+Validate.js
+// --------------- SEARCH BAR ---------------
+const formSearch = document.getElementById("myFormIdSearch");
+function searchValidate() {
+let errorSearch = 0;
+formSearch.classList.remove("is-invalid");
+let inputSearch = document.forms["myFormSearch"]["defaultSearch"];
+// Password
+if (inputSearch.value.length < 3) {
+inputSearch.classList.add("is-invalid");
+document.getElementById("errorSearch").textContent = "Please insert at 
+least 3 characters.";
+errorSearch++;
+}
+if (errorSearch > 0) {
+return false;
+} else {
+return true;
+}
+}
+formSearch.addEventListener("blur", (event) => {
+console.log(event);
+if (event.target.value != '') event.target.classList.remove("is-invalid");
+}, true);
+// --------------- LOGIN ---------------
+const formLogin = document.getElementById("myFormIdLogin");
+function loginValidate() {
+let errorMessageLogin = 0;
+formLogin.classList.remove("is-invalid");
+let inputEmailLogin = document.forms["myFormLogin"]["defaultForm-email"];
+let inputPasswordLogin = document.forms["myFormLogin"]["defaultFormpass"];
+// Email
+if (inputEmailLogin.value == "") {
+inputEmailLogin.classList.add("is-invalid");
+document.getElementById("errorEmailLogin").textContent = "Please enter 
+your email.";
+errorMessageLogin++;
+} else if (!validar_email(inputEmailLogin.value)) {
+inputEmailLogin.classList.add("is-invalid");
+document.getElementById("errorEmailLogin").textContent = "Invalid 
+email";
+errorMessageLogin++;
+}
+// Password
+if (inputPasswordLogin.value == "") {
+inputPasswordLogin.classList.add("is-invalid");
+document.getElementById("errorPasswordLogin").textContent = "Please 
+enter your password.";
+errorMessageLogin++;
+}
+if (errorMessageLogin > 0) {
+return false;
+} else {
+return true;
+}
+}
+formLogin.addEventListener("blur", (event) => {
+console.log(event);
+if (event.target.value != '') event.target.classList.remove("is-invalid");
+}, true);
+// --------------- REGISTER ---------------
+const form = document.getElementById("myFormId");
+function registerValidate() {
+let errorMessage = 0;
+form.classList.remove("is-invalid");
+let inputUsername = document.forms["myForm"]["form-username"];
+let inputEmail = document.forms["myForm"]['form-email'];
+let inputPassword = document.forms["myForm"]["form-password"];
+let inputConfirmPassword = document.forms["myForm"]["formconfirmPassword"];
+let inputProvince = document.forms["myForm"]["form-province"];
+// Username
+if (inputUsername.value == "") {
+inputUsername.classList.add("is-invalid")
+document.getElementById("errorUsername").textContent = "Please enter 
+your username.";
+errorMessage++;
+}
+// Email
+if (inputEmail.value == "") {
+inputEmail.classList.add("is-invalid");
+document.getElementById("errorEmail").textContent = "Please enter your 
+email.";
+errorMessage++;
+} else if (!validar_email(inputEmail.value)) {
+inputEmail.classList.add("is-invalid");
+document.getElementById("errorEmail").textContent = "Invalid email";
+errorMessage++;
+}
+// Password
+if (inputPassword.value == "") {
+inputPassword.classList.add("is-invalid");
+document.getElementById("errorPassword").textContent = "Please enter 
+your password.";
+errorMessage++;
+}
+// Confirm Password
+if (inputConfirmPassword.value == "") {
+inputConfirmPassword.classList.add("is-invalid");
+document.getElementById("errorConfirmPassword").textContent = "Please 
+confirm your password.";
+errorMessage++;
+}
+// Province
+if (inputProvince.value == "") {
+inputProvince.classList.add("is-invalid");
+document.getElementById("errorProvince").textContent = "Please enter 
+your province.";
+errorMessage++;
+}
+if (errorMessage > 0) {
+return false;
+} else {
+return true;
+}
+}
+form.addEventListener("blur", (event) => {
+console.log(event);
+if (event.target.value != '') event.target.classList.remove("is-invalid");
+}, true);
+function validar_email(email) {
+let regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-
+9]{2,4})+$/;
+return regex.test(email) ? true : false;
+}
+Output:
+Exercise 9: Design a Portfolio App
+index.js
+document.querySelectorAll(".projects-div").forEach((element, i) => {
+console.log(i);
+const ulClassName = `project-description-${i}`;
+const ulTag = element.getElementsByTagName("ul")[0];
+ulTag.className = ulClassName;
+ulTag.style.opacity = 0;
+ulTag.style.display = "none";
+element.addEventListener("click", () => {
+console.log(i);
+if (ulTag.style.display === "none") {
+gsap.to(`.${ulTag.className}`, {
+duration: 0.5,
+display: "block",
+opacity: 1
+});
+} else {
+gsap.to(`.${ulTag.className}`, {
+duration: 0.25,
+display: "none",
+opacity: 0
+});
+}
+});
+});
+style.css
+body {
+font-family: "Raleway", sans-serif;
+}
+a {
+font-size: 1.4rem;
+color: white;
+}
+p {
+font-size: 1.6rem;
+font-weight: 500;
+}
+h1 {
+font-size: 5rem;
+}
+h2 {
+font-size: 3rem;
+}
+h3 {
+font-size: 2.2rem;
+font-weight: 400;
+}
+h4 {
+font-size: 1.8rem;
+}
+ul {
+list-style-type: disc;
+}
+li {
+font-size: 1.6rem;
+font-weight: 500;
+}
+header {
+background: #003399;
+height: 5rem;
+display: flex;
+align-items: center;
+}
+header nav {
+display: flex;
+width: 800px;
+margin: 0 auto;
+}
+header nav a {
+padding: 0 1.5rem;
+border-right: 1px solid #5b5857;
+}
+header nav a:last-child {
+border: none;
+}
+.container {
+width: 800px;
+margin: 0 auto;
+}
+.title-section {
+display: flex;
+justify-content: space-between;
+}
+.title-img-div {
+width: 100%;
+height: 70rem;
+}
+.title-img-h-div {
+color: white;
+position: relative;
+bottom: 26rem;
+left: 1rem;
+width: 550px;
+margin: 0 auto;
+}
+.title-img-h-div h1 {
+font-family: "Bebas Neue", cursive;
+letter-spacing: 0.5rem;
+font-size: 9rem;
+margin-bottom: 2rem;
+}
+.title-img-h-div h2:first-child {
+font-size: 2.6rem;
+margin-bottom: 2rem;
+}
+.title-img-h-div h2 {
+font-size: 2rem;
+font-weight: 100;
+letter-spacing: 0.5rem;
+}
+.title-background {
+width: 100%;
+height: 70rem;
+object-fit: cover;
+}
+.title-sidebar-div {
+width: 30%;
+min-width: 225px;
+background: #262626;
+color: #e6e6e6;
+display: flex;
+flex-direction: column;
+align-items: center;
+height: 70rem;
+}
+.title-sidebar-div h3 {
+font-size: 4rem;
+margin: 2rem 0;
+font-family: "Bebas Neue", cursive;
+font-weight: 100;
+}
+.title-sidebar-div h4 {
+font-size: 1.6rem;
+font-weight: 100;
+}
+.title-fullstack-icon {
+height: 8rem;
+width: 8rem;
+filter: invert(100%);
+margin-bottom: 9rem;
+}
+.title-portfolio-icons {
+margin: 2rem 0;
+display: flex;
+align-items: center;
+justify-content: space-between;
+width: 12rem;
+filter: invert(100%);
+}
+.title-linkedin-icon {
+height: 5rem;
+width: 5rem;
+}
+.title-github-icon {
+height: 4.25rem;
+width: 4.25rem;
+}
+.title-profession-h4 {
+margin-bottom: 1rem;
+}
+.title-email-h4 {
+margin-bottom: 0.5rem;
+}
+.title-sidebar-portfolio-img {
+margin-top: 2rem;
+width: 15rem;
+height: 15rem;
+border-radius: 15rem;
+border: 1rem solid #1a1a1a;
+}
+.about-section {
+background: #e6e6e6;
+padding: 3rem 0;
+}
+.about-section h2 {
+font-family: "Bebas Neue", cursive;
+color: black;
+margin-bottom: 1rem;
+margin-left: 1rem;
+}
+.about-section p {
+line-height: 3.3rem;
+margin-left: 1rem;
+}
+.skills-section {
+padding: 3rem 0;
+background: #262626;
+color: #e6e6e6;
+}
+.skills-div {
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+max-width: 1000px;
+margin: 0 auto;
+}
+.skills-section h2 {
+font-family: "Bebas Neue", cursive;
+color: #e6e6e6;
+letter-spacing: 0.2rem;
+font-weight: 600;
+margin-left: 1rem;
+}
+.skills-section .container h3 {
+margin: 2rem 0;
+margin-left: 1rem;
+}
+.skills-card {
+background: #1a1a1a;
+color: #e6e6e6;
+width: 15rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 1rem 0;
+border-radius: 1rem;
+margin: 1rem 0.5rem;
+}
+.skills-card img {
+height: 13rem;
+width: 13rem;
+margin-bottom: 1rem;
+}
+.projects-section {
+background: #e6e6e6;
+padding: 3rem 0;
+}
+.projects-section .container {
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.projects-section h2 {
+font-family: "Bebas Neue", cursive;
+font-size: 4rem;
+}
+.projects-div {
+margin: 3rem 0 6rem 0;
+cursor: pointer;
+background: #d9d9d9;
+padding: 2rem;
+width: 100%;
+}
+.projects-div h3 {
+font-weight: 600;
+margin-bottom: 0.5rem;
+}
+.projects-div h4 {
+font-weight: 500;
+margin-bottom: 1.5rem;
+}
+.projects-description {
+display: none;
+}
+.projects-div ul li {
+margin: 1rem 0 1rem 4rem;
+line-height: 2.2rem;
+}
+.projects-icons {
+width: 11rem;
+display: flex;
+justify-content: space-between;
+margin-bottom: 2rem;
+}
+.projects-icons img {
+height: 4.5rem;
+width: 4.5rem;
+}
+.experience-section {
+background: #262626;
+color: #e6e6e6;
+padding: 4rem 0;
+}
+.experience-section .container {
+display: flex;
+justify-content: space-between;
+}
+.experience-div {
+width: 45%;
+display: flex;
+flex-direction: column;
+}
+.experience-div h2 {
+font-family: "Bebas Neue", cursive;
+margin-bottom: 4rem;
+font-weight: 400;
+letter-spacing: 0.1rem;
+}
+.experience-div div {
+margin-bottom: 3rem;
+}
+.experience-div div h3 {
+font-weight: 600;
+margin-bottom: 0.7rem;
+}
+.experience-div div h4 {
+font-weight: 400;
+font-size: 1.8rem;
+margin-bottom: 0.5rem;
+}
+footer {
+background: #003399;
+padding: 3rem 0;
+}
+footer .container {
+display: flex;
+justify-content: space-between;
+}
+.footer-info {
+color: white;
+}
+.footer-info h3 {
+margin-left: 1rem;
+}
+.footer-info h4 {
+font-weight: 100;
+margin: 1rem;
+}
+footer .title-portfolio-icons {
+margin-right: 1rem;
+}
+@media (max-width: 800px) {
+header nav {
+width: 100%;
+}
+.title-img-h-div {
+width: 100%;
+bottom: 27rem;
+}
+.title-sidebar-div {
+display: none;
+}
+.container {
+width: 100%;
+}
+.about-section p {
+width: 95%;
+}
+.skills-card {
+width: 10rem;
+height: 10rem;
+}
+.skills-card img {
+height: 5rem;
+width: 5rem;
+margin-bottom: 3rem;
+}
+.skills-card h3 {
+font-size: 1.5rem;
+}
+.skills-div {
+padding: 0;
+}
+.projects-div {
+width: 90%;
+}
+.projects-div ul li {
+width: 85%;
+}
+.projects-div h4 {
+width: 95%;
+}
+.experience-div {
+margin-left: 1rem;
+}
+footer .title-portfolio-icons {
+flex-direction: column;
+}
+footer .title-portfolio-icons img {
+margin-bottom: 2rem;
+}
+}
+@media (max-width: 500px) {
+.title-img-h-div {
+bottom: 38rem;
+}
+.experience-section .container {
+display: block;
+text-align: center;
+}
+.experience-div {
+width: 95%;
+}
+}
+Output
+Exercise: 10 Design Node E Learning system
+Index.js
+// window.addEventListener("DOMContentLoaded", (startApplication) =>{
+// function startApplication(event) {
+document.getElementById("clickHere").onclick = changeColor;
+// document.getElementById("index-button").onclick = showOptions;
+// document.getElementById("address-link").onclick = navigateToAddressSection;
+var x = "red";
+function changeColor(SridahEvent) {
+SridahEvent.preventDefault();
+if (x === "red") {
+document.body.style.color = "black";
+x = "black";
+alert("BLACK font is on the way");
+} else {
+document.body.style.color = "red";
+x = "red";
+alert("RED font is on the way");
+}
+return x;
+}
+// function showOptions(e) {
+// e.preventDefault();
+// var section = document.getElementById("objectives");
+// section.scrollIntoView();
+// }
+function navigateToAddressSection(e) {
+e.preventDefault();
+var field = document.getElementById("address");
+field.scrollIntoView();
+}
+// }
+// });
+Style.css
+body {
+color: red;
+}
+h1,
+h2 {
+font-family: areal;
+font-size: 32px;
+color: black;
+}
+.my-table {
+border: 10;
+}
+Output
